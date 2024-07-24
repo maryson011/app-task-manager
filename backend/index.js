@@ -42,6 +42,16 @@ app.post('/tasks', async (req, res) => {
     }
 })
 
+app.patch('/tasks/:id', async (req, res) => {
+    try {
+        const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, req.body)
+
+        return res.status(200).send(updateTask)
+    } catch (e) {
+        res.status(500).send(e.message)
+    }
+})
+
 app.delete('/tasks/:id', async (req, res) => {
     try {
         const taskId = req.params.id
