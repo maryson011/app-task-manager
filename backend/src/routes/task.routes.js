@@ -6,19 +6,19 @@ const TaskModel = require('../models/task.model')
 const router = Express.Router()
 
 router.get('/', async (req, res) => {
-    return new TaskController(req, res).getTasks()
+    return new TaskController(req, res).get()
 })
 router.get('/:id', async (req, res) => {
-    return new TaskController(req, res).getTaskById()
+    return new TaskController(req, res).getById()
 })
 router.post('/', async (req, res) => {
-    return new TaskController(req, res).postTask()
+    return new TaskController(req, res).create()
 })
 router.patch('/:id', async (req, res) => {
-    return new TaskController(req, res).patchTaskById()
+    return new TaskController(req, res).update()
 })
 router.delete('/:id', async (req, res) => {
-    return new TaskController(req, res).deleteTaskById()
+    return new TaskController(req, res).delete()
 })
 
 

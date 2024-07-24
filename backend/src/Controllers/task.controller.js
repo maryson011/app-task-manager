@@ -6,7 +6,7 @@ class TaskController {
         this.res = res
     }
 
-    async getTasks() {
+    async get() {
         try {
             const tasks = await TaskModel.find({})
             this.res.status(200).send(tasks)
@@ -15,7 +15,7 @@ class TaskController {
         }
     }
 
-    async getTaskById() {
+    async getById() {
         try {
             const task = await TaskModel.findById(this.req.params.id)
     
@@ -26,7 +26,7 @@ class TaskController {
         }
     }
 
-    async postTask() {
+    async create() {
         try {
             const newTask = new TaskModel(this.req.body)
             await newTask.save()
@@ -37,7 +37,7 @@ class TaskController {
         }
     }
 
-    async patchTaskById() {
+    async update() {
         try {
             const taskToUpdate = await TaskModel.findById(this.req.params.id);
     
@@ -59,7 +59,7 @@ class TaskController {
         }
     }
 
-    async deleteTaskById() {
+    async delete() {
         try {
             const taskId = this.req.params.id
             const taskToDelete = await TaskModel.findById(taskId)
