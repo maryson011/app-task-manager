@@ -44,9 +44,21 @@ app.post('/tasks', async (req, res) => {
 
 app.patch('/tasks/:id', async (req, res) => {
     try {
-        const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, req.body)
+        const taskToUpdate = await TaskModel.findById(req.params.id);
 
-        return res.status(200).send(updateTask)
+        const allowedUpdates = ['isCompleted']
+        const requestedUpdate = Object.keys(req.body)
+
+        for (update of requestedUpdate) {
+            if (allowedUpdates.includes(update)) {
+                taskToUpdate[update] = req.body[update]
+            } else {
+                return res.status(500).send('Um ou mais campos não são editáveis')
+            }
+        }
+
+        await taskToUpdate.save()
+        return res.status(200).send(taskToUpdate)
     } catch (e) {
         res.status(500).send(e.message)
     }
