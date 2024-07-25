@@ -14,3 +14,4 @@ Request --> Controller --> Model --> Controller --> View --> Controller --> Resp
 Request --> Router (express) --> Controller --> Model --> Controller --> Router (express) --> Response
 
 
+ npm install cors
