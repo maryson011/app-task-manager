@@ -1,6 +1,7 @@
+const mongoose = require('mongoose')
 const TaskModel = require('../models/task.model')
-const { notFoundError } = require('../errors/mongodb.errors')
-const notAllowedFileldToUpdateError = require('../errors/general.errors')
+const { notFoundError, objectIdCastError } = require('../errors/mongodb.errors')
+const { notAllowedFileldToUpdateError }= require('../errors/general.errors')
 class TaskController {
     constructor(req, res) {
         this.req = req
@@ -24,6 +25,9 @@ class TaskController {
     
             this.res.status(200).send(task)
         } catch (e) {
+            if (e instanceof mongoose.Error.CastError) {
+                return objectIdCastError(this.res)
+            }
             this.res.status(500).send(e.message)
         }
     }
@@ -61,6 +65,9 @@ class TaskController {
             await taskToUpdate.save()
             return this.res.status(200).send(taskToUpdate)
         } catch (e) {
+            if (e instanceof mongoose.Error.CastError) {
+                return objectIdCastError(this.res)
+            }
             this.res.status(500).send(e.message)
         }
     }
@@ -75,6 +82,9 @@ class TaskController {
             const deleteTask = await TaskModel.findByIdAndDelete(taskId)
             this.res.status(200).send(deleteTask)
         } catch (e) {
+            if (e instanceof mongoose.Error.CastError) {
+                return objectIdCastError(this.res)
+            }
             this.res.status(500).send(e.message)
         }
     }
