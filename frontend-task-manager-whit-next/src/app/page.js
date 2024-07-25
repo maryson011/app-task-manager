@@ -1,10 +1,9 @@
+'use client'
 import { useState, useEffect } from 'react'
-import './App.css'
-import './index.css'
 import axios from 'axios'
-import TaskItem from './components/TaskItem'
+import TaskItem from '@/app/componets/task/TaskItem'
 
-function App() {
+export default function Home() {
   const [tasks, setTasks] = useState([])
 
   const fetchTasks = async () => {
@@ -16,6 +15,10 @@ function App() {
     }
   }
 
+  const handleTaskClick = (taskId) => {
+    console.log('Task ID:', taskId)
+  }
+
   useEffect(() => {
     fetchTasks()
   }, [])
@@ -25,7 +28,12 @@ function App() {
       {tasks.length > 0 ? (
         tasks.map((task) => {
           return (
-            <TaskItem key={task._id} description={task.description} isCompleted={task.isCompleted}/>
+            <TaskItem 
+              key={task._id} 
+              description={task.description} 
+              isCompleted={task.isCompleted}
+              onClick={()=>handleTaskClick(task._id)}
+            />
           )
         })
       ) : (
@@ -35,5 +43,3 @@ function App() {
     </>
   )
 }
-
-export default App
