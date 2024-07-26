@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types'
+import { FaCheckCircle } from 'react-icons/fa'
+import ButtonTask from "../button/Button"
 
 const TaskItem = ({ description, isCompleted, onClick }) => {
     return (
@@ -7,16 +8,12 @@ const TaskItem = ({ description, isCompleted, onClick }) => {
             <div>
                 {
                     isCompleted ?
-                    "Finalizado" : 
-                    <button onClick={onClick}>Pendente</button>
+                    <FaCheckCircle size={25} className='text-green-600'/> :
+                    <ButtonTask texto="Pendente" onClick={onClick}/>
                 }
             </div>
         </div>
     )
 }
 
-// TaskItem.propTypes = {
-//     description: PropTypes.string.isRequired,
-//     isCompleted: PropTypes.bool.isRequired,
-// }
 export default TaskItem
